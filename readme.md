@@ -40,18 +40,7 @@ As we just learned, JAMstack sites use pre-rendering tools that use a build proc
 
 [Eleventy](https://www.11ty.io/) (aka 11ty) is a simple [static site generator](https://jamstack.org/generators/) (SSG). Statically generated websites are very popular due to their simplicity, superior speed, SEO and security.
 
-The benefits of 11ty over other completing generators include the fact that it is written in JavaScript (Node) and its simplicity. It uses templating engines to facilitate the flow of data.
-
-There are [many](https://www.developerdrive.com/best-javascript-templating-engines/) templating languages and 11ty supports them all:
-
-- [Pug](https://pugjs.org/api/getting-started.html)
-- [Handlebars](https://handlebarsjs.com)
-- [Moustache](https://github.com/janl/mustache.js/)
-- [Nunjucks](https://mozilla.github.io/nunjucks/)
-
-We'll use [Liquid](https://shopify.github.io/liquid/) today. Liquid is the in-house templating engine created and maintained by Shopify.
-
-If template languages are new to you don't worry, they are generally quite simple, resemble JavaScript and can be mastered easily.
+The benefits of 11ty over other completing generators include the fact that it is written in JavaScript (Node) and its simplicity. 
 
 ### Initial Setup
 
@@ -165,8 +154,22 @@ Create `src/_includes/layout.html`:
 
 Note the `{{ pageTitle }}` and `{{ content }}` template regions. Our content will be inserted there.
 
+Eleventy supports [many](https://www.developerdrive.com/best-javascript-templating-engines/) templating languages:
+
+- [Pug](https://pugjs.org/api/getting-started.html)
+- [Handlebars](https://handlebarsjs.com)
+- [Moustache](https://github.com/janl/mustache.js/)
+- [Nunjucks](https://mozilla.github.io/nunjucks/)
+
+If template languages are new to you don't worry, they are generally quite simple, resemble JavaScript and can be mastered easily.
+
+We'll use [Liquid](https://shopify.github.io/liquid/) today. Liquid is the in-house templating language created and maintained by Shopify.
+
+Add a new block at the top of `index.md`:
+
 ```md
 ---
+layout: layout.html
 pageTitle: New York Today
 ---
 
@@ -175,7 +178,9 @@ pageTitle: New York Today
 A list of articles will appear here
 ```
 
-Link the page to our template and add more content:
+The material at the top between the `---`'s is commonly called [front matter](https://www.11ty.io/docs/data-frontmatter/) and is written in [YAML](https://yaml.org/) (YAML Ain't Markup Language). YAML is typically used for processing instructions.
+
+Add more content:
 
 ```md
 ---
@@ -188,6 +193,9 @@ pageTitle: New York Today
 > Dorothy followed her through many of the beautiful rooms in her castle.
 
 A list of articles will appear here
+
+- bullet one
+- etc
 ```
 
 The index file we created has been merged with `_includes/layout` because of the `layout: layout.html` front matter instruction.
@@ -385,7 +393,7 @@ pageClass: pictures
 Add the following to the template's body tag:
 
 ```html
-<body class="{{ pageClass }}"></body>
+<body class="{{ pageClass }}">
 ```
 
 Now we can address any element on the page using our style sheet:
@@ -416,10 +424,6 @@ Then use it in your template:
 ```html
 <title>{{site.siteTitle}}</title>
 ```
-
-### Templating and Front Matter
-
-The material at the top between the `---`'s is commonly called [front matter](https://www.11ty.io/docs/data-frontmatter/) and uses [YAML](https://yaml.org/) (YAML Ain't Markup Language). YAML is typically used for processing instructions.
 
 #### Tagged Collections
 
@@ -555,9 +559,9 @@ Sign into Netlify and create a new site from Git. Check the settings to ensure t
 
 Examine the deploy logs. Note that Netlify will download and install 11ty in order to generate your `_site` folder and deploy that folder to a web server.
 
-## Ajax
+## Fetch 
 
-Ajax allows you to get data from your own or another's service. Web services expose data in the form of an API which allow you to get, delete, update or create data via [routes](http://jsonplaceholder.typicode.com/).
+Fetch allows you to get data from your own or another's service. Web services expose data in the form of an API which allow you to get, delete, update or create data via [routes](http://jsonplaceholder.typicode.com/).
 
 Today, we will get data from the New York Times and display it on our home page.
 
@@ -589,8 +593,6 @@ Add a hard coded link to the page in the template:
   </ul>
 </nav>
 ```
-
-### 1.8.1. Fetch
 
 The `fetch()` [API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) takes one mandatory argument, the path to the resource you want to fetch. It returns something known as a Promise that returns a response after the content is received.
 
