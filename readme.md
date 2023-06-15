@@ -22,7 +22,7 @@
 - use templates and markdown to generate a web site
 - introduce templating languages (Liquid) and YAML
 
-The [site we are creating](https://heuristic-morse-711174.netlify.app/).
+<!-- The [site we are creating](https://heuristic-morse-711174.netlify.app/). -->
 
 ## Static Site Generation
 
@@ -89,31 +89,7 @@ coverage
 readme.md
 ```
 
-### Create a Layout Template
-
-[Reference](https://www.11ty.io/docs/layouts/)
-
-Create `src/_includes/layout.html`:
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>My Blog</title>
-  </head>
-  <body>
-    <main tabindex="-1" class="content">
-      <h1>{{ pageTitle }}</h1>
-      {{ content }}
-    </main>
-  </body>
-</html>
-```
-
-Note the `{{ pageTitle }}` and `{{ content }}` template regions. Our content will be inserted there.
+### Eleventy Configuration
 
 Add [passthroughs](https://www.11ty.dev/docs/copy/) for our static assets in an `.eleventy.js` file.
 
@@ -144,7 +120,50 @@ module.exports = function (config) {
 };
 ```
 
+Run `npm start` and open the localhost address in Chrome.
+
+Note:
+
+- the generated `_site` folder
+- the folders specified in our config are copied into `_site`
+
+### Markdown
+
 Create `src/index.md` on the top level with the following structure:
+
+```md
+## Articles
+
+A list of articles will appear here
+```
+
+Note the conversion to HTML.
+
+### Create a Layout Template
+
+[Reference](https://www.11ty.io/docs/layouts/)
+
+Create `src/_includes/layout.html`:
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/styles.css" />
+    <title>My Blog</title>
+  </head>
+  <body>
+    <main tabindex="-1" class="content">
+      <h1>{{ pageTitle }}</h1>
+      {{ content }}
+    </main>
+  </body>
+</html>
+```
+
+Note the `{{ pageTitle }}` and `{{ content }}` template regions. Our content will be inserted there.
 
 ```md
 ---
@@ -155,14 +174,6 @@ pageTitle: New York Today
 
 A list of articles will appear here
 ```
-
-Run `npm start` and open the localhost address in Chrome.
-
-Note:
-
-- the generated `_site` folder
-- the conversion from markdown to html
-- the folders specified in our config are copied into `_site`
 
 Link the page to our template and add more content:
 
