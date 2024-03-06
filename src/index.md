@@ -5,7 +5,7 @@ tags: page
 navTitle: Home
 ---
 
-## Articles
+## My Articles
 
 {% for page in collections.page %}
   <h2><a href="{{ page.url | url }}">{{ page.data.pageTitle }}</a></h2>
