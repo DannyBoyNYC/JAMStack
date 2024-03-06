@@ -3,17 +3,12 @@ layout: layout.html
 pageTitle: New York Today
 tags: page
 navTitle: Home
-# This is YAML, and this is my first introduction to it oop.
 ---
 
 ## Articles
 
-A list of articles:
+{% for page in collections.page %}
 
-> Block quote
-
-- Bullet one
-- Bullet two
-
-1.
-1.
+  <h2><a href="{{ page.url }}">{{ page.data.pageTitle }}</a></h2>
+  <em>{{ page.date | date: "%Y-%m-%d" }}</em>
+{% endfor %}
